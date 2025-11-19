@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anniversary Login</title>
+
+<!-- Simple Beautiful Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: #000;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    /* Beautiful Simple Title */
+    .title {
+        margin-top: 30px;
+        font-size: 48px;
+        color: #fff;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-shadow:
+            0 0 8px #ff69b4,
+            0 0 18px #ff69b4,
+            0 0 28px #ffd700;
+        animation: glow 2.5s ease-in-out infinite;
+        z-index: 5;
+    }
+
+    @keyframes glow {
+        0% { text-shadow: 0 0 10px #ff69b4; }
+        50% { text-shadow: 0 0 25px #ffd700; }
+        100% { text-shadow: 0 0 10px #ff69b4; }
+    }
+
+    /* FLIP CARD */
+    .flip-card {
+        width: 280px;
+        height: 380px;
+        perspective: 1000px;
+        margin-top: 40px;
+        z-index: 5;
+    }
+
+    .flip-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.8s;
+        cursor: pointer;
+    }
+
+    .flip-front, .flip-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 15px;
+        border: 2px solid #555;
+        box-shadow: 0 0 15px rgba(255,255,255,0.25);
+        background-size: cover;
+        background-position: center;
+    }
+
+    .flip-back {
+        transform: rotateY(180deg);
+    }
+
+    .flip-active {
+        transform: rotateY(180deg);
+    }
+
+    /* LOGIN BOX */
+    .login-box {
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 5;
+    }
+
+    .login-box input {
+        padding: 12px 15px;
+        width: 220px;
+        border-radius: 8px;
+        border: none;
+        font-size: 18px;
+        outline: none;
+        text-align: center;
+    }
+
+    .login-box button {
+        margin-top: 14px;
+        padding: 12px 40px;
+        border: none;
+        border-radius: 8px;
+        background: #ff69b4;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .login-box button:hover {
+        background: #ff85c6;
+    }
+
+    .error {
+        color: #ff4d4d;
+        margin-top: 8px;
+        font-size: 14px;
+        opacity: 0;
+        transition: 0.3s;
+    }
+
+    /* STARS */
+    .star {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: #fff7b1;
+        border-radius: 50%;
+        animation: twinkle 3s infinite ease-in-out;
+        opacity: 0.3;
+        z-index: 1;
+    }
+
+    @keyframes twinkle {
+        0%,100% { opacity: 0.2; }
+        50% { opacity: 1; }
+    }
+
+    /* PETALS */
+    .petal {
+        position: absolute;
+        width: 18px;
+        height: 22px;
+        background: #ff8eb8;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(20deg);
+        animation: fallPetal 6s linear infinite;
+        opacity: 0.9;
+        z-index: 2;
+    }
+
+    @keyframes fallPetal {
+        0% { transform: translateY(-20px) rotate(20deg); }
+        100% { transform: translateY(110vh) rotate(120deg); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="title">HAPPY ANNIVERSARY</div>
+
+<!-- FLIP CARD WITH YOUR IMAGES -->
+<div class="flip-card" onclick="flipCard()">
+    <div class="flip-inner" id="flipInner">
+
+        <!-- FRONT IMAGE -->
+        <div class="flip-front" style="background-image:url('photo4.jpeg');"></div>
+
+        <!-- BACK IMAGE -->
+        <div class="flip-back" style="background-image:url('photo2.jpeg');"></div>
+
+    </div>
+</div>
+
+<!-- LOGIN (password always visible) -->
+<div class="login-box">
+    <input type="text" id="passwordInput" placeholder="Enter Password">
+    <button onclick="checkPassword()">Login</button>
+    <div class="error" id="errorMsg">Incorrect Password</div>
+</div>
+
+<script>
+    /* PASSWORD CHECK */
+    function checkPassword() {
+        const pw = document.getElementById('passwordInput').value;
+        const error = document.getElementById('errorMsg');
+
+        if (pw === "20/11/03") {
+            window.location.href = "next.html";
+        } else {
+            error.style.opacity = 1;
+        }
+    }
+
+    /* FLIP CARD */
+    function flipCard() {
+        document.getElementById("flipInner").classList.toggle("flip-active");
+    }
+
+    /* STARS */
+    for (let i = 0; i < 150; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star");
+        star.style.left = Math.random() * window.innerWidth + "px";
+        star.style.top = Math.random() * window.innerHeight + "px";
+        star.style.animationDuration = (2 + Math.random() * 2) + "s";
+        document.body.appendChild(star);
+    }
+
+    /* PETALS */
+    function createPetal() {
+        const petal = document.createElement("div");
+        petal.classList.add("petal");
+        petal.style.left = Math.random() * window.innerWidth + "px";
+        petal.style.animationDuration = (4 + Math.random() * 4) + "s";
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 9000);
+    }
+
+    setInterval(createPetal, 350);
+</script>
+
+</body>
+</html>
